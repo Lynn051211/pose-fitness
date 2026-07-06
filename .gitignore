@@ -1,0 +1,38 @@
+# 排除所有文件和子目录
+/*
+!/pose_fitness/
+!/run.py
+!/.gitignore
+!/README.md
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# 虚拟环境
+.venv/
+venv/
+
+# 数据库文件（本地训练记录）
+*.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 模型文件太大，不提交（首次运行自动下载）
+yolov8n-pose.pt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 环境变量
+.env
+.env.local
