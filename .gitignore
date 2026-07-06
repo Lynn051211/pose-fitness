@@ -1,6 +1,7 @@
 # 排除所有文件和子目录
 /*
 !/pose_fitness/
+!/industrial-defect-detection/
 !/run.py
 !/.gitignore
 !/README.md
@@ -36,3 +37,11 @@ Thumbs.db
 # 环境变量
 .env
 .env.local
+
+# 工业缺陷检测 — 排除生成数据和模型
+industrial-defect-detection/data/raw/
+industrial-defect-detection/data/augmented/
+industrial-defect-detection/output/
+industrial-defect-detection/runs/
+industrial-defect-detection/models/
+industrial-defect-detection/yolov8n.pt
