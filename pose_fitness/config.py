@@ -1,7 +1,10 @@
 """所有可调参数和配置"""
 
+import os
 import numpy as np
 import threading
+
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ---- YOLO COCO 关键点索引 ----
 KP = {
@@ -19,7 +22,7 @@ KP = {
 CAMERA_ID = 0
 
 # ---- YOLO ----
-MODEL_PATH = "yolov8n-pose.pt"
+MODEL_PATH = os.path.join(_BASE_DIR, "yolov8n-pose.pt")
 IMGSZ = 320
 CONF = 0.5
 
