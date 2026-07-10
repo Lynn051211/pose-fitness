@@ -1,0 +1,62 @@
+============================================================
+  Project 项目端口占用说明
+  更新日期：2026-07-10
+============================================================
+
+【已部署服务（Docker Compose）】
+
+1. knowledge-base-rag（知识库 RAG 系统）
+   ├── 前端 (Vue)         → 5173:80
+   ├── 后端 API (FastAPI) → 8102:8102
+   ├── PostgreSQL         → 15432:5432
+   ├── Redis              → 6380:6379
+   └── Meilisearch        → 7701:7700
+
+2. travel_system（AI 旅行规划平台）
+   ├── 前端 (Vite)        → 4021:3000
+   ├── 后端 API           → 8001:8000
+   └── PostgreSQL         → 5433:5432
+
+3. intelligent-data-agent（智能数据分析 Agent）
+   ├── 前端 (Vue)         → 5173:80
+   ├── 后端 API           → 8103:8103
+   ├── PostgreSQL         → 5433:5432 (默认，可配置)
+   └── Redis              → 6380:6379 (默认，可配置)
+
+【Python 独立服务（直接运行）】
+
+4. pose_fitness（智能运动计数系统）
+   └── Web 仪表盘 (FastAPI) → 8080
+
+5. industrial-defect-detection（工业缺陷检测系统）
+   └── API 服务 (FastAPI) → 8000
+
+6. vision-inspection-report（智能视觉报告生成与多模态质检系统）
+   └── API 服务 (FastAPI) → 8000 (默认，可通过 .env 修改 PORT)
+
+7. chatbot（AI 聊天机器人）
+   └── Gradio WebUI → 7860
+
+8. online_chatting_room（多人在线聊天室）
+   └── FastAPI + WebSocket → 9000 (默认，可设 CHAT_PORT)
+
+9. lakejobai-job-radar（Boss直聘 AI 求职雷达）
+   └── Web App → 8000 (可配置)
+
+【端口冲突汇总】
+
+  8000  ← 冲突：industrial-defect-detection / vision-inspection-report / lakejobai
+          解决：不同时启动，或修改各项目的 PORT 配置
+
+  5173  ← 冲突：knowledge-base-rag 前端 vs intelligent-data-agent 前端
+          解决：不同时启动
+
+  5433  ← 冲突：travel_system vs intelligent-data-agent PostgreSQL
+          travel_system 硬编码 5433，data-agent 默认 5433 可改
+
+  6380  ← 冲突：knowledge-base-rag vs intelligent-data-agent Redis
+          knowledge-base-rag 硬编码 6380，data-agent 默认 6380 可改
+
+【Docker 容器启动顺序建议】
+  先启动占用端口的项目 → 再启动可能冲突的项目时修改端口
+  或使用 docker-compose down 关闭不再用的服务
