@@ -42,12 +42,13 @@ GAZE_AWAY_SEC = 3.0          # 连续不看屏幕 N 秒 → 提醒
 GAZE_IRIS_RATIO_THRESH = 0.25  # 虹膜位置偏离中心 > 25% 判为走神
 
 # ---- UI 颜色 (B, G, R) ----
-COLOR_GREEN = (0, 255, 0)
-COLOR_RED = (0, 0, 255)
-COLOR_YELLOW = (0, 255, 255)
-COLOR_WHITE = (255, 255, 255)
-COLOR_BLUE = (255, 0, 0)
-COLOR_ORANGE = (0, 165, 255)
+# OpenCV 使用 BGR 格式，注意蓝色通道在前，红色通道在后
+COLOR_GREEN = (0, 255, 0)       # BGR: 纯绿
+COLOR_RED = (0, 0, 255)         # BGR: 纯红
+COLOR_YELLOW = (0, 255, 255)    # BGR: 黄 = 绿+红
+COLOR_WHITE = (255, 255, 255)   # BGR: 白
+COLOR_BLUE = (255, 0, 0)        # BGR: 纯蓝
+COLOR_ORANGE = (0, 165, 255)    # BGR: 橙
 
 # ---- Web 推流 ----
 WEB_PORT = 8080

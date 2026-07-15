@@ -1,4 +1,4 @@
-"""引体向上：手腕与肩部相对位置检测"""
+"""引体向上：手腕与肩部相对位置检测（左右双侧平均）"""
 
 import numpy as np
 from .base import BaseExercise
@@ -10,19 +10,21 @@ class Pullup(BaseExercise):
     def __init__(self):
         super().__init__("引体向上", target_reps=10)
 
-    def _wrist_above_shoulder(self, kp) -> bool:
-        """右腕 y 坐标是否高于右肩（画面中 y 越小越靠上）"""
-        return kp[KP["right_wrist"]][1] < kp[KP["right_shoulder"]][1] - 15
-
-    def _wrist_below_shoulder(self, kp) -> bool:
-        """右腕 y 坐标是否低于右肩（悬挂状态）"""
-        return kp[KP["right_wrist"]][1] > kp[KP["right_shoulder"]][1] + 15
+    def _avg_wrist_shoulder_diff(self, kp) -> float:
+        """左右手腕-肩膀 y 坐标差的平均值（正=腕低于肩/悬挂，负=腕高于肩/拉起）"""
+        left_diff = kp[KP["left_wrist"]][1] - kp[KP["left_shoulder"]][1]
+        right_diff = kp[KP["right_wrist"]][1] - kp[KP["right_shoulder"]][1]
+        return (left_diff + right_diff) / 2.0
 
     def is_ready(self, kp) -> bool:
-        return kp is not None and self._wrist_below_shoulder(kp)
+        if kp is None:
+            return False
+        return bool(self._avg_wrist_shoulder_diff(kp) > 15)
 
     def is_down(self, kp) -> bool:
-        return kp is not None and self._wrist_above_shoulder(kp)
+        if kp is None:
+            return False
+        return bool(self._avg_wrist_shoulder_diff(kp) < -15)
 
     def is_up(self, kp) -> bool:
         return self.is_ready(kp)

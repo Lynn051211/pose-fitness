@@ -131,7 +131,7 @@ def main():
 
         if key == 27 or key == ord("q"):
             break
-        elif chr(key) in EXERCISES:
+        elif 0 < key < 256 and chr(key) in EXERCISES:
             if exercise.count > 0:
                 database.save(exercise.name, exercise.count)
             if isinstance(exercise, Plank) and exercise.duration > 0:

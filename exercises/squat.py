@@ -15,10 +15,14 @@ class Squat(BaseExercise):
         return angle_3pts(kp[KP["right_hip"]], kp[KP["right_knee"]], kp[KP["right_ankle"]])
 
     def is_ready(self, kp) -> bool:
-        return kp is not None and self._knee_angle(kp) > 150
+        if kp is None:
+            return False
+        return bool(self._knee_angle(kp) > 150)
 
     def is_down(self, kp) -> bool:
-        return kp is not None and self._knee_angle(kp) < 90
+        if kp is None:
+            return False
+        return bool(self._knee_angle(kp) < 90)
 
     def is_up(self, kp) -> bool:
         return self.is_ready(kp)

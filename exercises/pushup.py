@@ -21,12 +21,12 @@ class Pushup(BaseExercise):
     def is_ready(self, kp) -> bool:
         if kp is None:
             return False
-        return self._elbow_angle(kp) > 140 and abs(self._body_angle(kp) - 180) < 30
+        return bool(self._elbow_angle(kp) > 140 and abs(self._body_angle(kp) - 180) < 30)
 
     def is_down(self, kp) -> bool:
         if kp is None:
             return False
-        return self._elbow_angle(kp) < 90 and abs(self._body_angle(kp) - 180) < 30
+        return bool(self._elbow_angle(kp) < 90 and abs(self._body_angle(kp) - 180) < 30)
 
     def is_up(self, kp) -> bool:
         return self.is_ready(kp)

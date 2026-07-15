@@ -1,9 +1,11 @@
 """SQLite 训练记录"""
 
+import os
 import sqlite3
 from datetime import datetime
 
-DB_PATH = "fitness.db"
+# 使用模块所在目录作为数据库路径基准，避免 CWD 变化导致数据库散落各处
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fitness.db")
 
 
 def init():
